@@ -1,82 +1,131 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8201553&assignment_repo_type=AssignmentRepo)
-# React Solo Project
+# Create T3 App
 
-## Requirements
+This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
 
-- `React.js 18`
-- `Node.js ^16.10 || 18`. Need to change your version?
-  - [Window](https://github.com/coreybutler/nvm-windows)
-  - [Mac](https://github.com/tj/n)
-- Firebase (optional, but strongly encouraged for your database, auth, hosting, and storage needs).
-- Hosting: if not Firebase, it must be an pre-approved PaaS
-  - Vercel
-  - Heroku
-  - Railway
+## Why are there `.js` files in here?
 
-## Getting Started
+As per [T3-Axiom #3](https://github.com/t3-oss/create-t3-app/tree/next#3-typesafety-isnt-optional), we believe take typesafety as a first class citizen. Unfortunately, not all frameworks and plugins support TypeScript which means some of the configuration files have to be `.js` files.
 
-We are using "yarn" instead of "npm" in this project.
+We try to emphasize that these files are javascript for a reason, by explicitly declaring its type (`cjs` or `mjs`) depending on what's supported by the library it is used by. Also, all the `js` files in this project are still typechecked using a `@ts-check` comment at the top.
 
-1. Install yarn. `npm install -g yarn`
-2. Install all node modules. `yarn install`
-3. Boot up the server. `yarn start`
+## What's next? How do I make an app with this?
 
-### Hosting (Necessary for sprint 1)
+We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
 
-1. Go to the official Firebase website and set up a project.
-2. Enable Firebase Hosting by going into the hosting section under Build dropdown.
-3. Inside your repo run the following commands (one at a time):
-4. `npm install -g firebase-tools`
-5. `firebase login`
-6. `firebase init`
-7. `yarn build` (*remember to always build before deploying your code to production*).
-8. `firebase deploy`
-9. If you run into trouble take a look at: https://www.geeksforgeeks.org/how-to-deploy-react-project-on-firebase/
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-### Firebase (if you need authentication or a database in your project)
+- [Next-Auth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [TailwindCSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io) (using @next version? [see v10 docs here](https://alpha.trpc.io))
 
-1. If you don't need authentication or a db, you can ignore the 'login', 'firebase' and 'authSlice' files and skip this section.
-2. Go to the official Firebase website and set up a project.
-3. Enable Firebase Firestore if you need a database or Firestore Authentication if you need user authentication.
-4. If you need user authentication, make sure to enable google authentication in the settings.
-5. If you used `yarn` to install all dependencies, you shouldn't need to install anything else.
-6. Change the name of the '.env.local.example' file to '.env.local' and write your api key and other information (can be found in the settings of your project on the firebase website).
-7. The 'Login' component is commented out in 'App.js'. If you don't need it, delete it. If you do need it, move it to the page where you need it.
-8. You can import the 'Login' component on the page you want the user to log in. At the moment the logic is set up to support authorization with Google. If you want to add others (email, username and password, github) You will have to implement this on your own.
-9. Clicking on the "Continue with Google" button should open a pop-up that logs you in. If this doesn't work, check your firebase keys and if you have google authentication enabled. Once you are logged in, it will automatically update the state in the 'authSlice' reducer with your information (display name, email and access token). If you need any of these, you can get them with a useSelector hook in the component where you need them.
-10. You can check if the user is signed in by checking the state of the 'authSlice'. If user is false (empty), the user isn't signed in.
-11. You are free to style the buttons or the login component as you see fit. You can (probably a good idea) move the log out button somewhere else, depending on your project. as long as you import all the necessary things and don't change the function/logic, it should work.
+## How do I deploy this?
 
-### Folder Structure And Advice
+### Vercel
 
-1. You can adjust the folder structure if you have other preferances.
-2. The "redux" folder contains an example reducer (counter). You can delete this.
-3. You can use whichever CSS library you wish, or just plain CSS/SASS (preferably modules).
-4. You may modify the boilerplate (e.g. delete dummy text in App.js, the counter, the the logo.svg, etc.)
-5. V1 of this project is due in 3 weeks. Remeber to KISS (Keep It Simple, Stupid). You need to think of v1 as a conceptual boundary of constraints; anything *outside those boundaries must be saved for a future version*.
+We recommend deploying to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss). It makes it super easy to deploy NextJs apps.
 
-<!---
-*** WHEN YOU ARE UP AND RUNNING, YOU MAY DELETE EVERYTHING ABOVE -EXCEPT- THE VERY TOP LINE. ***
--->
+- Push your code to a GitHub repository.
+- Go to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss) and sign up with GitHub.
+- Create a Project and import the repository you pushed your code to.
+- Add your environment variables.
+- Click **Deploy**
+- Now whenever you push a change to your repository, Vercel will automatically redeploy your website!
 
-## Sprint Progress
+### Docker
 
-Go to the [milestones tab](../../milestone/1) to track your progress.
+You can also dockerize this stack and deploy a container.
 
-## Project Overview
+1. In your [next.config.mjs](./next.config.mjs), add the `output: "standalone"` option to your config.
+2. Create a `.dockerignore` file with the following contents:
+   <details>
+   <summary>.dockerignore</summary>
 
-### Public URL
+   ```
+   Dockerfile
+   .dockerignore
+   node_modules
+   npm-debug.log
+   README.md
+   .next
+   .git
+   ```
 
-[Replace me with the link to your app's URL](https://www.google.com/)
+  </details>
 
-### Description
+3. Create a `Dockerfile` with the following contents:
+   <details>
+   <summary>Dockerfile</summary>
 
-**Required:** update [your repository](https://stackoverflow.com/questions/7757751/how-do-you-change-a-repository-description-on-github) with a short description of your project.
+   ```Dockerfile
+   # Install dependencies only when needed
+   FROM node:16-alpine AS deps
+   # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+   RUN apk add --no-cache libc6-compat
+   WORKDIR /app
 
-### Mockups
+   # Install dependencies based on the preferred package manager
+   COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+   RUN \
+      if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+      elif [ -f package-lock.json ]; then npm ci; \
+      elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+      else echo "Lockfile not found." && exit 1; \
+      fi
 
-*View `README.md` to see how to replace me with mockups.*
 
-| ![Benjamin Bannekat](/mockups/github-cat.png) | ![Benjamin Bannekat](/mockups/github-cat.png) |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![Benjamin Bannekat](/mockups/github-cat.png) | ![Benjamin Bannekat](/mockups/github-cat.png) |
+   # Rebuild the source code only when needed
+   FROM node:16-alpine AS builder
+   WORKDIR /app
+   COPY --from=deps /app/node_modules ./node_modules
+   COPY . .
+
+   # Next.js collects completely anonymous telemetry data about general usage.
+   # Learn more here: https://nextjs.org/telemetry
+   # Uncomment the following line in case you want to disable telemetry during the build.
+   # ENV NEXT_TELEMETRY_DISABLED 1
+
+   RUN yarn build
+
+   # If using npm comment out above and use below instead
+   # RUN npm run build
+
+   # Production image, copy all the files and run next
+   FROM node:16-alpine AS runner
+   WORKDIR /app
+
+   ENV NODE_ENV production
+   # Uncomment the following line in case you want to disable telemetry during runtime.
+   # ENV NEXT_TELEMETRY_DISABLED 1
+
+   RUN addgroup --system --gid 1001 nodejs
+   RUN adduser --system --uid 1001 nextjs
+
+   # You only need to copy next.config.js if you are NOT using the default configuration
+   # COPY --from=builder /app/next.config.js ./
+   COPY --from=builder /app/public ./public
+   COPY --from=builder /app/package.json ./package.json
+
+   # Automatically leverage output traces to reduce image size
+   # https://nextjs.org/docs/advanced-features/output-file-tracing
+   COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+   COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+   USER nextjs
+
+   EXPOSE 3000
+
+   ENV PORT 3000
+
+   CMD ["node", "server.js"]
+   ```
+
+  </details>
+
+4. You can now build an image to deploy yourself, or use a PaaS such as [Railway's](https://railway.app) automated [Dockerfile deployments](https://docs.railway.app/deploy/dockerfiles) to deploy your app.
+
+## Useful resources
+
+Here are some resources that we commonly refer to:
+
+- [Protecting routes with Next-Auth.js](https://next-auth.js.org/configuration/nextjs#unstable_getserversession)
