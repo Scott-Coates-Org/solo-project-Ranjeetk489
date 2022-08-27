@@ -1,0 +1,5 @@
+{
+    "WillLuke.nextjs.addTypesOnSave": true,
+    "WillLuke.nextjs.hasPrompted": true,
+    "compile-hero.disable-compile-files-on-did-save-code": false
+}
